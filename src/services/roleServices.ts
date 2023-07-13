@@ -91,7 +91,7 @@ export const scan = async () => {
     try{
         setInterval(async () => {
             await process()
-        }, 1);
+        }, 20_000);
     }catch(err: any){
         console.log("Err at /services/roleServices.ts/process()");
         console.log(err);
