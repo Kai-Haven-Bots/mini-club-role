@@ -1,4 +1,4 @@
-import { AnyThreadChannel, ForumChannel, GuildBasedChannel, GuildMember, GuildTextBasedChannel, Message } from "discord.js";
+import { AnyThreadChannel, ForumChannel, Guild, GuildBasedChannel, GuildMember, GuildTextBasedChannel, Message } from "discord.js";
 import { channelId, client, mini_clubbers, roleId } from "..";
 
 export const getAllThreadCreators = async () => {
@@ -101,11 +101,7 @@ export const owner_scan = async () => {
 
 export const give_mini_clubbers = async (member: GuildMember) => {
     try{
-        let roles = member.roles;
-
-        if(roles.cache.has(mini_clubbers)) return;
-
-        await roles.add(mini_clubbers);
+        await member.roles.add(mini_clubbers);
     }catch(err: any){
         console.log("Err at /services/roleServices.ts/give_mini_clubbers()");
         console.log(err);
@@ -139,7 +135,8 @@ export const scan_previous_miniclubbers = async () => {
 
             for(let msg of all){
                 try{
-                    let member = await msg.guild?.members.fetch(msg.author.id);
+                    // let member = await msg.guild?.members.fetch(msg.author.id);
+                    let member = msg.member;
                     if(!member) return;
     
                     give_mini_clubbers(member)
