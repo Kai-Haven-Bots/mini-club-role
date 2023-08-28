@@ -1,5 +1,6 @@
 import { AnyThreadChannel, ForumChannel, Guild, GuildBasedChannel, GuildMember, GuildTextBasedChannel, Message } from "discord.js";
 import { channelId, client, mini_clubbers, roleId } from "..";
+import fs from 'fs';
 
 export const getAllThreadCreators = async () => {
     try{
@@ -116,12 +117,17 @@ export const scan_previous_miniclubbers = async () => {
         //basically for people from the past who have been in miniclub before this
 
         //step 1: retrieve the channels and miniclubs
+        let guild = await client.guilds.fetch('859736561830592522');
+
         const channel = (await client.channels.fetch(channelId)) as ForumChannel;
         const all = await channel.threads.fetch({}); //note for some reason it fetches ALL the threads in the server instead of just the channels
         let clubs = all.threads.filter(v => v.parentId === channelId);
         
         console.log(`Fetched ${clubs.size} clubs, starting scan...`);
         
+        //debug var
+        let couldnt_fetch = [];
+
         //iterate through all the clubs
         for(let club_raw of clubs){
             let club = club_raw[1];
@@ -136,15 +142,15 @@ export const scan_previous_miniclubbers = async () => {
             for(let msg of all){
                 try{
                     // let member = await msg.guild?.members.fetch(msg.author.id);
-                    let member = msg.member;
-                    if(!member) return;
-    
+                    let member = await guild.members.fetch(msg.author.id);
                     give_mini_clubbers(member)
                 }catch(err: any){
+                    couldnt_fetch.push(msg.author.globalName);
                 }
             }
 
             console.log(`Gave role to all. (${club.name})`);
+            fs.writeFileSync('unabletofetch.txt', couldnt_fetch.join('\n'))
         }
     
     }catch(err: any){
