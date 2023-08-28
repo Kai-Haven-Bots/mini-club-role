@@ -138,11 +138,15 @@ export const scan_previous_miniclubbers = async () => {
             //go through all the messages and give em miniclubbers.
 
             for(let msg of all){
-                
-                let member = await msg.guild?.members.fetch(msg.author.id);
-                if(!member) return;
-
-                give_mini_clubbers(member)
+                try{
+                    let member = await msg.guild?.members.fetch(msg.author.id);
+                    if(!member) return;
+    
+                    give_mini_clubbers(member)
+                }catch(err: any){
+                    console.log("Err while scanning club messages at roleServices.ts/scan_previous_miniclubbers()");
+                    console.log(err);
+                }
             }
 
             console.log(`Gave role to all. (${club.name})`);
