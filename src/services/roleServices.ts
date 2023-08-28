@@ -144,8 +144,6 @@ export const scan_previous_miniclubbers = async () => {
     
                     give_mini_clubbers(member)
                 }catch(err: any){
-                    console.log("Err while scanning club messages at roleServices.ts/scan_previous_miniclubbers()");
-                    console.log(err);
                 }
             }
 
