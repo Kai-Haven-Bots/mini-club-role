@@ -23,29 +23,14 @@ client.login(process.env._TOKEN);
 
 client.once('ready', async (client) => {
     console.log("ready");
-    // await owner_scan();
-    // await scan_previous_miniclubbers(); //it runs just once at startup
+    await owner_scan();
+    await scan_previous_miniclubbers(); //it runs just once at startup
 })
 
 //this part is especially for the mini club role part.
 client.on('messageCreate', async (msg) => {
     if(!msg.guild) return;
     let channel = msg.channel as GuildTextBasedChannel;
-    //we will also add AI club role
-
-    if(channel.id === "1205177809257889872"){
-        try{
-            const member = msg.member;
-            if(!member) throw new Error("No member found");
-
-            if(!member.roles.cache.has("1205187533873356911")){
-                await member.roles.add("1205187533873356911")
-            }
-        }catch(err: any){
-            console.log("Err while giving AI club roles");
-            console.log(err);
-        }
-    }
 
     if(channel.parent?.id !== "1104451671972663326") return;
     
