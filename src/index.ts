@@ -10,7 +10,7 @@ require('dotenv').config({
 export const roleId="1108699211664478270";
 export const channelId="1104451671972663326";
 
-//for the mini club chatters
+//for the mini club chatters 
 export const mini_clubbers = "1143462057195339836";
 
 const F = IntentsBitField.Flags;
