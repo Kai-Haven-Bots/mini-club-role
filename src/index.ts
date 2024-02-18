@@ -23,8 +23,8 @@ client.login(process.env._TOKEN);
 
 client.once('ready', async (client) => {
     console.log("ready");
-    await owner_scan();
-    await scan_previous_miniclubbers(); //it runs just once at startup
+    // await owner_scan();
+    // await scan_previous_miniclubbers(); //it runs just once at startup
 })
 
 //this part is especially for the mini club role part.
