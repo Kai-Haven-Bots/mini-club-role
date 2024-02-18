@@ -28,9 +28,21 @@ client.once('ready', async (client) => {
 })
 
 //this part is especially for the mini club role part.
-client.on('messageCreate', async msg => {
+client.on('messageCreate', async (msg) => {
     if(!msg.guild) return;
     let channel = msg.channel as GuildBasedChannel;
+    //we will also add AI club role
+
+    if(channel.id === "1205177809257889872"){
+        try{
+            const member = msg.member;
+            if(!member) throw new Error("No member found");
+
+            if(!member.roles.cache.has("1205187533873356911")){
+                await member.roles.add("1205187533873356911")
+            }
+        }catch(err: any){}
+    }
 
     if(channel.parent?.id !== "1104451671972663326") return;
     
