@@ -1,4 +1,4 @@
-import { AnyThreadChannel, Client, EmbedBuilder, ForumChannel, GuildBasedChannel, IntentsBitField} from 'discord.js';
+import { AnyThreadChannel, Client, EmbedBuilder, ForumChannel, GuildBasedChannel, GuildTextBasedChannel, IntentsBitField} from 'discord.js';
 import * as path from 'path';
 import { getAllTOwnerRoleMembers, getAllThreadCreators, owner_scan, fetch_all_msg, scan_previous_miniclubbers, give_mini_clubbers } from './services/roleServices';
 
@@ -30,7 +30,7 @@ client.once('ready', async (client) => {
 //this part is especially for the mini club role part.
 client.on('messageCreate', async (msg) => {
     if(!msg.guild) return;
-    let channel = msg.channel as GuildBasedChannel;
+    let channel = msg.channel as GuildTextBasedChannel;
     //we will also add AI club role
 
     if(channel.id === "1205177809257889872"){
@@ -41,7 +41,10 @@ client.on('messageCreate', async (msg) => {
             if(!member.roles.cache.has("1205187533873356911")){
                 await member.roles.add("1205187533873356911")
             }
-        }catch(err: any){}
+        }catch(err: any){
+            console.log("Err while giving AI club roles");
+            console.log(err);
+        }
     }
 
     if(channel.parent?.id !== "1104451671972663326") return;
